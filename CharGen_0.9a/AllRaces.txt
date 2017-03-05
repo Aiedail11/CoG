@@ -1,0 +1,11 @@
+Elf
+Dwarf
+Human
+Half-elf
+Half-orc
+Tiefling
+Dragonborn
+Drow
+Eladrin
+Hobbit
+Faunus
