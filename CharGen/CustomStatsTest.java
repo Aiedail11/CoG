@@ -2,7 +2,7 @@ public class CustomStatsTest
 {
    public static void main(String[] args)
    {
-   StatsGen generator = new StatsGen(3, "Faunus", false);
+   StatsGen generator = new StatsGen(new SysLog(new CharGen()), 3, "Faunus", true);
    System.out.print("\nLevel: " + generator.level+
                   "\nWisps: " + generator.wisps + "\n"+
                   

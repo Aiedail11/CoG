@@ -1,0 +1,16 @@
+Name: Isas ~ Worthy, meritorious.
+Origin of Name: Japanese
+Gender: Male
+
+Class: Spine
+Race: Dwarf
+Level: 1
+Wisps: 0
+
+Endurance: 21
+Dexterity: 10
+Strength: 12
+Arcana: 11
+
+Draiocht: 2
+Replenish Rate: 1

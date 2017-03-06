@@ -6,14 +6,15 @@ public class SysLog
 {
    Scanner scan;
    boolean logging;
-    String timeStamp = "";
-    boolean firstLog = true;
-    boolean rennamedLog = false;
+   String timeStamp = "";
+   boolean firstLog = true;
+   boolean rennamedLog = false;
+   CharGen charGenInstance;
 //this is a normal scanner that outputs to the console and a text file
 
-   public SysLog()
+   public SysLog(CharGen c)
    {
-   
+      charGenInstance = c;
    }
    public void startLog()
    {
@@ -21,20 +22,30 @@ public class SysLog
    }
    public void stopLog()
    {
-   println("Session saved in \\Logs\\" + timeStamp + ".txt");
+      println("Session saved in \\Logs\\" + timeStamp + ".txt");
       logging = false;
    }
    public void startNewLog()
    {
-   firstLog = false;
-   timeStamp = renameFile(timeStamp);
+      firstLog = false;
+      timeStamp = renameFile(timeStamp);
    }
    public void renameLog()
    {
+      Scanner console = new Scanner(System.in);
+      rennamedLog = true;
+      print("\nEnter desired log name: ");
+      timeStamp = console.nextLine();
+   }
+   public String takeInput()
+   {
    Scanner console = new Scanner(System.in);
-   rennamedLog = true;
-   print("\nEnter desired log name: ");
-   timeStamp = console.nextLine();
+      charGenInstance.setPrompt(charGenInstance.getPrompt().split("> ")[0] + "# ");
+      println();
+      String temp =  console.nextLine();
+      if(logging){printlnToLog(charGenInstance.getPrompt() + temp);}
+      charGenInstance.setPrompt(charGenInstance.getPrompt().split("# ")[0] + "> ");
+      return temp;
    }
    public void print(String s)
    {
@@ -44,9 +55,9 @@ public class SysLog
          FileWriter logTxt = new FileWriter(logFile, true);
          
          
-         System.out.print( s);
+         System.out.print( charGenInstance.getPrompt()+s);
          try{
-            if(logging){logTxt.append(s);}
+            if(logging){logTxt.append(charGenInstance.getPrompt()+s);}
          }
          catch(IOException  fe){
             fe.printStackTrace();
@@ -72,13 +83,13 @@ public class SysLog
    }
    public void printlnToLog(String s)
    {
-    try {
-          if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
+      try {
+         if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
          File logFile = new File(".\\Logs\\"+timeStamp+".txt");
          FileWriter logTxt = new FileWriter(logFile, true);
        
          try{
-            if(logging){logTxt.append("\n"+s);}
+            if(logging){logTxt.append("\n" + charGenInstance.getPrompt()+s);}
          }
          catch(IOException  fe){
             fe.printStackTrace();
@@ -101,49 +112,17 @@ public class SysLog
          fe.printStackTrace();
       }
    
-
+   
    }
    public void printlnToLog()
    {
-     try {
-          if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
-         File logFile = new File(".\\Logs\\"+timeStamp+".txt");
-         FileWriter logTxt = new FileWriter(logFile, true);
-         
-         try{
-            if(logging){logTxt.append("\n");}
-         }
-         catch(IOException  fe){
-            fe.printStackTrace();
-         }
-         try{
-            logTxt.flush();
-            logTxt.close();
-         } 
-         catch (Exception e) {
-            System.err.println("Error in Flush/close line 816:");
-            e.printStackTrace();
-         }
-      
-      } 
-      catch (FileNotFoundException fnfe) {
-         
-         fnfe.printStackTrace();
-      }
-      catch(IOException  fe){
-         fe.printStackTrace();
-      }
-
-   }
-   public void printToLog(String s)
-   {
-    try {
+      try {
          if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
          File logFile = new File(".\\Logs\\"+timeStamp+".txt");
          FileWriter logTxt = new FileWriter(logFile, true);
          
          try{
-            if(logging){logTxt.append(s);}
+            if(logging){logTxt.append("\n" + charGenInstance.getPrompt());}
          }
          catch(IOException  fe){
             fe.printStackTrace();
@@ -165,19 +144,53 @@ public class SysLog
       catch(IOException  fe){
          fe.printStackTrace();
       }
-
+   
+   }
+   public void printToLog(String s)
+   {
+      try {
+         if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
+         File logFile = new File(".\\Logs\\"+timeStamp+".txt");
+         FileWriter logTxt = new FileWriter(logFile, true);
+         
+         try{
+            if(logging){logTxt.append(charGenInstance.getPrompt()+s);}
+         }
+         catch(IOException  fe){
+            fe.printStackTrace();
+         }
+         try{
+            logTxt.flush();
+            logTxt.close();
+         } 
+         catch (Exception e) {
+            System.err.println("Error in Flush/close line 816:");
+            e.printStackTrace();
+         }
+      
+      } 
+      catch (FileNotFoundException fnfe) {
+         
+         fnfe.printStackTrace();
+      }
+      catch(IOException  fe){
+         fe.printStackTrace();
+      }
+   
    }
    public void println(String s)
    {
       try {
-          if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
+         if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
          File logFile = new File(".\\Logs\\"+timeStamp+".txt");
          FileWriter logTxt = new FileWriter(logFile, true);
          
          
-         System.out.println( s);
+         //System.out.println( charGenInstance.getPrompt()+s);
+         System.out.print( "\n"+charGenInstance.getPrompt()+s);
+         
          try{
-            if(logging){logTxt.append("\n"+s);}
+            if(logging){logTxt.append("\n"+charGenInstance.getPrompt()+s);}
          }
          catch(IOException  fe){
             fe.printStackTrace();
@@ -204,14 +217,14 @@ public class SysLog
    public void println()
    {
       try {
-          if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
+         if(firstLog){timeStamp = new SimpleDateFormat("yyyy.MM.dd_hh").format(new Date());}
          File logFile = new File(".\\Logs\\"+timeStamp+".txt");
          FileWriter logTxt = new FileWriter(logFile, true);
          
          
-         System.out.println();
+         System.out.print("\n"+charGenInstance.getPrompt());
          try{
-            if(logging){logTxt.append("\n");}
+            if(logging){logTxt.append("\n" +charGenInstance.getPrompt());}
          }
          catch(IOException  fe){
             fe.printStackTrace();
