@@ -1,0 +1,30 @@
+Enter the number corresponding to the desired mode.
+0. Help (See more information)
+1. Random
+2. Specific
+3. Custom -- COMING SOON!
+6. Toggle SysLog (Disabled)
+5
+
+Testing mode selected.
+Enter the desired level of the character (any integer greater than one).
+over 9000
+Exception in thread "main" java.lang.NumberFormatException: For input string: "over 9000"
+        at java.lang.NumberFormatException.forInputString(Unknown Source)
+        at java.lang.Integer.parseInt(Unknown Source)
+        at java.lang.Integer.parseInt(Unknown Source)
+        at CharGen.pickLevel(CharGen.java:625)
+        at CharGen.enterMode(CharGen.java:195)
+        at CharGen.go(CharGen.java:87)
+        at CharGen.shouldContinue(CharGen.java:408)
+        at CharGen.go(CharGen.java:89)
+        at CharGen.shouldContinue(CharGen.java:408)
+        at CharGen.go(CharGen.java:89)
+        at CharGen.shouldContinue(CharGen.java:408)
+        at CharGen.specific(CharGen.java:281)
+        at CharGen.specific(CharGen.java:235)
+        at CharGen.enterMode(CharGen.java:171)
+        at CharGen.go(CharGen.java:87)
+        at CharGen.shouldContinue(CharGen.java:408)
+        at CharGen.go(CharGen.java:89)
+        at CharGen.main(CharGen.java:81)

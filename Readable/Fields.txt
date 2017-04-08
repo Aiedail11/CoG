@@ -1,0 +1,10 @@
+Race
+Class
+Gender
+Name
+Picture
+Stats
+Talent or Magic Family
+Ethnicity
+Age
+Birthday

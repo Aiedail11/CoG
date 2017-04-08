@@ -1,0 +1,104 @@
+
+
+Enter the number corresponding to the desired mode.
+0. Help (See more information)
+1. Random
+2. Specific
+3. Custom -- COMING SOON!
+6. Toggle SysLog (Enabled)
+2
+
+Specific mode selected.
+
+
+Enter the desired fields to output, separated by commas
+	(use 'help' to list available fields)
+name race class
+Enter desired name, or type 'none' 
+to continue to gender and ethnicity selection.
+none
+Enter desired gender ('male' or 'female'), or type 
+'none' to randomly generate gender.
+none
+Enter desired ethnicity, or
+type 'none' to randomly generate ethnicity, or
+type 'help' to view the list of ethnicities.
+none
+Generate full name? (y/n)
+y
+Enter desired class, or 
+type 'none' to randomly generate class, or
+type 'help' to view available classes.
+none
+Enter the desired race, 
+or type 'none' to randomly generate race, or 
+type 'help' to view a list of available races.
+none
+------------------
+Name: Alecto Levana 
+~ A fury, one of the Three Fates. Rising sun. ~
+Origin of Name: Latin
+Gender: Female
+
+Class: Spine
+Race: Dragonborn
+------------------
+
+
+Would you like to save this configuration to a text file in .\Saves? (y/n)
+n
+Configuration has not been saved.
+
+
+Would you like to generate another character?
+y = yes, and select new mode
+n = no, end run and exit
+r = repeat, use current settings
+
+r
+------------------
+Name: Melia Rhea 
+~ Nymph daughter of Oceanus. Daughter of Heaven and Earth. ~
+Origin of Name: Greek
+Gender: Female
+
+Class: Face
+Race: Dwarf
+------------------
+
+
+Would you like to save this configuration to a text file in .\Saves? (y/n)
+n
+Configuration has not been saved.
+
+
+Would you like to generate another character?
+y = yes, and select new mode
+n = no, end run and exit
+r = repeat, use current settings
+
+r
+------------------
+Name: Basilio Camillo 
+~ Kingly, royal. Virgin of unblemished character. ~
+Origin of Name: Italian
+Gender: Male
+
+Class: Face
+Race: Hobbit
+------------------
+
+
+Would you like to save this configuration to a text file in .\Saves? (y/n)
+n
+Configuration has not been saved.
+
+
+Would you like to generate another character?
+y = yes, and select new mode
+n = no, end run and exit
+r = repeat, use current settings
+
+n
+Session saved in \Logs\2017.02.17_11.txt
+Goodbye!
