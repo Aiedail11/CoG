@@ -1,6 +1,0 @@
-Name: Ferris ~ A rock, a stone.
-Origin of Name: Irish
-Gender: Male
-
-Class: Fist
-Race: Half-orc
