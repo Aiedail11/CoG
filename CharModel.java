@@ -30,10 +30,26 @@ public class CharModel {
       hasStats =false;
       this.creator = creator;
    }
-   public void setName(String name, String eth, int gen)
+   public String getName() {return myName;}
+   public String getEthnicity() {return myEthnicity;}
+   public int getGender() {return myGender;}
+   public String getRace() {return myRace;}
+   public String getKlass() {return myClass;}
+   public int getLevel() {return myLevel;}
+   public String getGenderString() {return genderString;}
+   
+   public void setLevel(int n)
+   {myLevel = n;}
+   public void setName(String name )
    {
       myName = name;
+   }
+   public void setEthnicity(String eth)
+   {
       myEthnicity = eth;
+   }
+   public void setGender(int gen)
+   {
       myGender = gen;
    
       if(gen==1) {
@@ -112,40 +128,53 @@ public class CharModel {
    }
    public void checkForStats(String temp)
    {
-  //  endurance, strength, dexterity, 
-//    draiocht, wisps, replenishRate, arcana;
+   //  endurance, strength, dexterity, 
+   //    draiocht, wisps, replenishRate, arcana;
       if(temp.contains("Level: "))
       {
          hasStats = true;
-         myLevel = Integer.parseInt(temp.substring("Level: ".length()+1, temp.length()));
+         myLevel = Integer.parseInt(temp.substring("Level: ".length(), temp.length()));
       }
       if(temp.contains("Wisps: "))
       {
-         wisps = Integer.parseInt(temp.substring("Wisps: ".length()+1, temp.length()));
+         wisps = Integer.parseInt(temp.substring("Wisps: ".length(), temp.length()));
       }
-       if(temp.contains("Dexterity: "))
+      if(temp.contains("Dexterity: "))
       {
-         dexterity = Integer.parseInt(temp.substring("Dexterity: ".length()+1, temp.length()));
+         dexterity = Integer.parseInt(temp.substring("Dexterity: ".length(), temp.length()));
       }
       if(temp.contains("Draiocht: "))
       {
-         draiocht = Integer.parseInt(temp.substring("Draiocht: ".length()+1, temp.length()));
-      }if(temp.contains("Endurance: "))
+         draiocht = Integer.parseInt(temp.substring("Draiocht: ".length(), temp.length()));
+      }
+      if(temp.contains("Endurance: "))
       {
-         endurance = Integer.parseInt(temp.substring("Endurance: ".length()+1, temp.length()));
+         endurance = Integer.parseInt(temp.substring("Endurance: ".length(), temp.length()));
+      }
+      if(temp.contains("Strength: "))
+      {
+         strength = Integer.parseInt(temp.substring("Strength: ".length(), temp.length()));
+      }
+      if(temp.contains("Arcana: "))
+      {
+         arcana = Integer.parseInt(temp.substring("Arcana: ".length(), temp.length()));
+      }
+      if(temp.contains("Replenish Rate: "))
+      {
+         replenishRate = Integer.parseInt(temp.substring("Replenish Rate: ".length(), temp.length()));
       }
    
    }
    public void checkForName(String temp){
-      if(temp.contains("Name: "))
+      if(temp.split(" ")[0].equals("Name:"))
       {
-         myName = temp.substring("Name: ".length()+1, temp.length());
+         myName = temp.substring("Name: ".length(), temp.length());
       }
       if(temp.contains("Origin of Name: ")){
-         myEthnicity = temp.substring("Origin of Name: ".length()+1, temp.length());
+         myEthnicity = temp.substring("Origin of Name: ".length(), temp.length());
       }
       if(temp.contains("Gender: ")){
-         genderString = temp.substring("Gender: ".length()+1, temp.length());
+         genderString = temp.substring("Gender: ".length(), temp.length());
          if(genderString.equals("Female")) {
          
             myGender = 1;
@@ -160,14 +189,18 @@ public class CharModel {
    {
       if(temp.contains("Class: "))
       {
-         myClass = temp.substring("Class: ".length()+1, temp.length());
+         myClass = temp.substring("Class: ".length(), temp.length());
       }
    }
    public void checkForRace(String temp)
    {
       if(temp.contains("Race: "))
       {
-         myRace = temp.substring("Race: ".length()+1, temp.length());
+         myRace = temp.substring("Race: ".length(), temp.length());
       }
+   }
+   public void checkMetadata(String temp)
+   {
+     
    }
 }

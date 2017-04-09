@@ -13,7 +13,7 @@ public class ReadFiles {
    
    ArrayList<String> classes = new ArrayList<String>();
    
-ArrayList<String> ethnicityList = new ArrayList<String>();
+   ArrayList<String> ethnicityList = new ArrayList<String>();
    
    ArrayList<String> namesList = new ArrayList<String>();
    String token1= "";
@@ -27,7 +27,7 @@ ArrayList<String> ethnicityList = new ArrayList<String>();
    int replenishRate;
    int level;
 
-int numEth;
+   int numEth;
 
    int mode;
    int gender;
@@ -41,17 +41,17 @@ int numEth;
    boolean usingNames;
 
    
-   public ReadFiles(int m, String e, int g) {
+   public ReadFiles(int m, CharModel c) {
       mode = m;
-      ethnicity = e;
-      gender = g;
+      ethnicity = c.getEthnicity();
+      gender = c.getGender();
       
    }
    public ReadFiles()
    {
-   mode = 2; ///dummy, you are assuming that whether it is 2 or 3 won't matter in this class
-   ethnicity = "Irish";
-   gender = 1;
+      mode = 2; ///dummy, you are assuming that whether it is 2 or 3 won't matter in this class
+      ethnicity = "Irish";
+      gender = 1;
    }
    public void initialize() {
    
@@ -97,7 +97,7 @@ int numEth;
          token1 = "";
       }
    }
-   
+  
    public void readFields() {
       try {
          File fieldsFile = new File(".\\Readable\\Fields.txt");

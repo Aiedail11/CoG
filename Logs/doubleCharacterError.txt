@@ -1,0 +1,72 @@
+
+CoG> 
+Enter the number corresponding to the desired mode.
+0. Help (See more information)
+1. Random
+2. Specific
+3. Custom -- COMING SOON!
+6. Toggle SysLog (Enabled)
+CoG# 
+CoG# CoG# exit
+CoG> 
+Enter the number corresponding to the desired mode.
+0. Help (See more information)
+1. Random
+2. Specific
+3. Custom -- COMING SOON!
+6. Toggle SysLog (Enabled)
+CoG# 
+CoG# CoG# 1
+CoG(random)> reading stats...
+CoG(random)> 
+Name: Isidore ~ Gift of Isis.
+Origin of Name: French
+Gender: Male
+
+Class: Heart
+Race: Half-orc
+Level: 1
+Wisps: 0
+
+Endurance: 12
+Dexterity: 9
+Strength: 20
+Arcana: 12
+
+Draiocht: 3
+Replenish Rate: 1
+------------------
+
+CoG(random)> reading stats...
+CoG(random)> 
+Name: Jalini ~ A water deweller.
+Origin of Name: Hindu
+Gender: Female
+
+Class: Face
+Race: Half-elf
+Level: 1
+Wisps: 0
+
+Endurance: 17
+Dexterity: 20
+Strength: 8
+Arcana: 8
+
+Draiocht: 23
+Replenish Rate: 5
+------------------
+
+CoG(random)> Would you like to save this configuration to a text file in .\Saves? (y/n)
+CoG(random)# 
+CoG(random)# CoG(random)# y
+CoG(random)> Configuration will be saved as Jalini.txt in the Saves directory.
+CoG(random)> 
+Would you like to generate another character?
+y = yes, and select new mode
+n = no, end run and exit
+r = repeat, use current settings
+CoG(random)# 
+CoG(random)# CoG(random)# n
+CoG> Session saved in \Logs\2017.04.08_11.txt
+CoG> Goodbye!
