@@ -1,0 +1,109 @@
+
+
+Enter the number corresponding to the desired mode.
+0. Help (See more information)
+1. Random
+2. Specific
+3. Custom -- COMING SOON!
+6. Toggle SysLog (Enabled)
+1
+
+Random mode selected.
+
+------------------
+Name: Egon ~ "Edge or point of a sword."
+Origin of Name: German
+Gender: Male
+
+Class: Heart
+Race: Elf
+Level: 1
+Wisps: 0
+
+Endurance: 11
+Dexterity: 21
+Strength: 9
+Arcana: 11
+
+Draiocht: 25
+Replenish Rate: 3
+------------------
+
+
+Would you like to save this configuration to a text file in .\Saves? (y/n)
+n
+Configuration has not been saved.
+
+
+Would you like to generate another character?
+y = yes, and select new mode
+n = no, end run and exit
+r = repeat, use current settings
+
+y
+
+Enter the number corresponding to the desired mode.
+0. Help (See more information)
+1. Random
+2. Specific
+3. Custom -- COMING SOON!
+6. Toggle SysLog (Enabled)
+2
+
+Specific mode selected.
+
+
+Enter the desired fields to output, separated by commas
+	(use 'help' to list available fields)
+name class stats
+Enter desired name, or type 'none' 
+to continue to gender and ethnicity selection.
+none
+Enter desired gender ('male' or 'female'), or type 
+'none' to randomly generate gender.
+none
+Enter desired ethnicity, or
+type 'none' to randomly generate ethnicity, or
+type 'help' to view the list of ethnicities.
+none
+Generate full name? (y/n)
+y
+Enter desired class, or 
+type 'none' to randomly generate class, or
+type 'help' to view available classes.
+none
+
+WARNING: A race has not been selected and will be generated automatically.
+------------------
+Name: Tristan Leandre 
+~ Sorrow. Lion man. ~
+Origin of Name: French
+Gender: Male
+
+Class: Fist
+Level: 1
+Wisps: 0
+
+Endurance: 19
+Dexterity: 12
+Strength: 11
+Arcana: 10
+
+Draiocht: 5
+Replenish Rate: 2
+------------------
+
+
+Would you like to save this configuration to a text file in .\Saves? (y/n)
+n
+Configuration has not been saved.
+
+
+Would you like to generate another character?
+y = yes, and select new mode
+n = no, end run and exit
+r = repeat, use current settings
+
+n
+Session saved in \Logs\2017.03.04_07.txt
+Goodbye!
