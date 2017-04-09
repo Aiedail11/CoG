@@ -1,0 +1,18 @@
+
+Name: Jalini ~ A water deweller.
+Origin of Name: Hindu
+Gender: Female
+
+Class: Face
+Race: Half-elf
+Level: 1
+Wisps: 0
+
+Endurance: 17
+Dexterity: 20
+Strength: 8
+Arcana: 8
+
+Draiocht: 23
+Replenish Rate: 5
+------------------

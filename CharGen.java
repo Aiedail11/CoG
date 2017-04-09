@@ -47,19 +47,20 @@ public class CharGen {
    private static SysLog log;
    private StatsGen statsGen;
    private ReadFiles fileReader;
+   private static CharModel character;
  // USER INPUT
    private String input = "";
    private int mode = -1; //stores overall generator mode
    private Scanner console = new Scanner(System.in);
    private String desiredFields; // used in specific mode to store desired outputs
  // CHARACTER INFO 
-   private String ethnicity = "";
-   private String genderString;
-   private int gender = -1, ethNum = -1;
-   private String myRace = "";
-   private String myClass = "";
-   private String myName = "";
-   private int myLevel = 1;
+  //  private String ethnicity = "";
+//    private String genderString;
+//    private int gender = -1, ethNum = -1;
+//    private String myRace = "";
+//    private String myClass = "";
+//    private String myName = "";
+//    private int myLevel = 1;
  // SYSLOG-RELATED OUTPUT VARIABLES
    private static String prompt = "CoG> ";
    //ALL THE BOOLEANS YAY
@@ -88,7 +89,10 @@ public class CharGen {
       me.welcome();
       me.go();    
    }
-   
+   public CharModel getCharacter()
+   {
+      return character;
+   }
    public  void go() {
       fullName=false;
       enterMode(); //auto-random generation, specific generation, or custom generation; then executes the mode
@@ -101,7 +105,7 @@ public class CharGen {
    }
    public  void enterMode() {
       prompt = "CoG> ";
-     
+      character = new CharModel("root");
      //reset all values
       dmPresets = false;
       setRace = false;
@@ -109,13 +113,13 @@ public class CharGen {
       setGender = false;
       setName = false;
       setEthnicity = false;
-      ethnicity = "";
-      genderString = "";
-      myRace = "";
-      myClass = "";
-      myName = "";
-      myLevel = 1;
-      
+      // ethnicity = "";
+   //       genderString = "";
+   //       myRace = "";
+   //       myClass = "";
+   //       myName = "";
+   //       myLevel = 1;
+   //       
       
       if(log.logging){    
          log.println("\nEnter the number corresponding to the desired mode."
@@ -141,15 +145,14 @@ public class CharGen {
          enterMode();
       }
       mode = Integer.parseInt(input);
-      if(mode==0)
-      { new Helper("enterMode"); }
-      if(mode <1 || mode > 6)
-      { enterMode(); }
-         
+
           
        //execute method for selected mode
       switch (mode) {
-      
+         case 0:
+         new Helper("enterMode");
+         enterMode();
+         break;
          case 1:   
             prompt = "CoG(random)> "; 
             usingStats=true;         
@@ -197,6 +200,16 @@ public class CharGen {
          case 6:
             if(!log.logging){log.startLog();}
             else{log.stopLog();}
+            enterMode();
+            break;
+         case 7:
+            loadSave();
+            printCharacter();
+            log.println("No further course of action.");
+            
+            enterMode();
+            break;
+         default:
             enterMode();
       }
    }
@@ -248,7 +261,7 @@ public class CharGen {
          if(repeating && !setName)
          {
             pickNamePrereqs();
-            fileReader = new ReadFiles(mode, ethnicity, gender);
+            fileReader = new ReadFiles(mode, character);
             fileReader.usingNames=true;
             fileReader.initialize();
             fileReader.usingNames=false;
@@ -263,7 +276,7 @@ public class CharGen {
       {
          if(repeating && !setClass){
          
-            fileReader = new ReadFiles(mode, ethnicity, gender);
+            fileReader = new ReadFiles(mode, character);
             fileReader.usingClasses=true;
             fileReader.initialize();
             fileReader.usingClasses=false;
@@ -276,7 +289,7 @@ public class CharGen {
       if(desiredFields.contains("race"))
       {
          if(repeating && !setRace){
-            fileReader = new ReadFiles(mode, ethnicity, gender);
+            fileReader = new ReadFiles(mode, character);
             fileReader.usingRaces=true;
             fileReader.initialize();
             fileReader.usingRaces=false;
@@ -288,7 +301,7 @@ public class CharGen {
          
       if(desiredFields.contains("stats"))
       {
-         if(myRace.equals(""))
+         if(character.getRace().equals(""))
          {
             log.println("WARNING: A race has not been selected and will be generated automatically.");
             fileReader = new ReadFiles();
@@ -328,15 +341,15 @@ public class CharGen {
    //saves if applicable, or asks for a new filename (due to previously existing file)
       FileWriter fw;
       String save = "";
-      if(myName.equals(""))
-      { 
-         myName = "Unnamed"; 
-         ethnicity = "None";
-         genderString = "None";
+      // if(character.getName().equals(""))
+      // { 
+         // myName = "Unnamed"; 
+         // ethnicity = "None";
+         // genderString = "None";
+      // 
+      // }
       
-      }
-      
-      String[] nameArray = myName.split(" ~|/| ");
+      String[] nameArray = character.getName().split(" ~|/| ");
       String justName = nameArray[0];
    
      
@@ -354,34 +367,35 @@ public class CharGen {
             }
             fw = new FileWriter(theFile);  //note that this overwrites a pre-existing file DUMMY
             try{
-               if(!myName.equals("")){
-                  fw.write(
-                     "Name: " + myName +
-                     "\nOrigin of Name: " +ethnicity +
-                     "\nGender: " + genderString);
-               
-                  if(!myClass.equals("")){                  
-                     fw.append(
-                        "\n\nClass: " + myClass);
-                  }
-                  if(!myRace.equals("")){
-                     fw.append("\nRace: " + myRace);
-                  }
-                 
-                  if(usingStats)
-                  {
-                     fw.append("\nLevel: " + statsGen.level+
-                        "\nWisps: " + statsGen.wisps + "\n"+
-                        
-                        "\nEndurance: " + statsGen.end+
-                        "\nDexterity: " + statsGen.dex+
-                        "\nStrength: " + statsGen.str+
-                        "\nArcana: " + statsGen.arc + "\n"+
-                        
-                        "\nDraiocht: " + statsGen.draiocht+
-                        "\nReplenish Rate: " + statsGen.replenishRate);
-                  }
-               }
+               fw.write(character.toString());
+               // if(!myName.equals("")){
+                  // fw.write(
+                     // "Name: " + myName +
+                     // "\nOrigin of Name: " +ethnicity +
+                     // "\nGender: " + genderString);
+               // 
+                  // if(!myClass.equals("")){                  
+                     // fw.append(
+                        // "\n\nClass: " + myClass);
+                  // }
+                  // if(!myRace.equals("")){
+                     // fw.append("\nRace: " + myRace);
+                  // }
+               //   
+                  // if(usingStats)
+                  // {
+                     // fw.append("\nLevel: " + statsGen.level+
+                        // "\nWisps: " + statsGen.wisps + "\n"+
+                        // 
+                        // "\nEndurance: " + statsGen.end+
+                        // "\nDexterity: " + statsGen.dex+
+                        // "\nStrength: " + statsGen.str+
+                        // "\nArcana: " + statsGen.arc + "\n"+
+                        // 
+                        // "\nDraiocht: " + statsGen.draiocht+
+                        // "\nReplenish Rate: " + statsGen.replenishRate);
+                  // }
+               //}
             } 
             catch (Exception e) {
                System.err.println("HELP:");
@@ -433,6 +447,7 @@ public class CharGen {
          System.exit(0);
       }
       else if(input.equals("r")){
+         character = new CharModel("root");
          repeating = true;
          if(dmPresets)
          {
@@ -475,12 +490,25 @@ public class CharGen {
       }
      
    }
-   
+   public void loadSave() {
+      log.println("Enter name of character to load.");
+      String tempName = log.takeInput();
+      try {
+         File charFile = new File(".\\Saves\\" + tempName+".txt");
+         Scanner  charTxt = new Scanner(charFile);        
+         character = new CharModel("root");
+         character.openSaved(charTxt);
+      } 
+      catch (FileNotFoundException fnfe) {
+         
+         fnfe.printStackTrace();
+      }
+   }
    public  void genAll() {  //used only for random mode
       
       pickNamePrereqs();
         
-      fileReader = new ReadFiles(mode, ethnicity, gender);
+      fileReader = new ReadFiles(mode, character);
       fileReader.initialize();
      
       usingStats=true;
@@ -496,15 +524,17 @@ public class CharGen {
    }
  
    public void readStats() {
+   //log.println("reading stats...");
       if(mode==3) {//random mode - defaults to level one
-         statsGen = new StatsGen(log, myLevel, myRace, true);  
+         statsGen = new StatsGen(log, character.getLevel(), character.getRace(), true);  
       }
       else if(mode==2){ //specific or custom modes
-         statsGen = new StatsGen(log, myLevel, myRace, false);
+         statsGen = new StatsGen(log, character.getLevel(), character.getRace(), false);
       }
       else { //mode ==3
-         statsGen = new StatsGen(log, myLevel, myRace, false);
+         statsGen = new StatsGen(log, character.getLevel(), character.getRace(), false);
       }
+      character.setStats(statsGen);
    }
   
    public void pickRace() {
@@ -512,23 +542,23 @@ public class CharGen {
          return;}
       int raceIndex = (int)(Math.random() * (fileReader.races.size()-1));
       
-      myRace = fileReader.races.get(raceIndex);
+      character.setRace(fileReader.races.get(raceIndex));
       
       if(dmPresets) { //prevents generating from Custom lists
-         while(myRace.equals("Custom")) {
+         while(character.getRace().equals("Custom")) {
             raceIndex = (int)(Math.random() * (fileReader.races.size()-1));
          
-            myRace = fileReader.races.get(raceIndex);
+            character.setRace(fileReader.races.get(raceIndex));
          }
       }
       
-      fileReader.race_fr = myRace;
+      fileReader.race_fr = character.getRace();
    
    }
    
    public void pickClass() {
       int classIndex = (int)(Math.random() * (fileReader.classes.size()-1));
-      myClass = fileReader.classes.get(classIndex);
+      character.setClass(fileReader.classes.get(classIndex));
       
    }
    
@@ -537,89 +567,89 @@ public class CharGen {
       String[] lastName;
       
          
-      if(gender ==-1 || ethnicity.equals("") || ethnicity.equals(""))
+      if(character.getGender() ==-1 || character.getEthnicity().equals(""))
       { pickNamePrereqs(); }
-      fileReader = new ReadFiles(mode, ethnicity, gender);
+      fileReader = new ReadFiles(mode, character);
       fileReader.usingNames = true;
       fileReader.initialize();
       
       int namesIndex = (int)(Math.random() * (fileReader.namesList.size()-1));
    
-      myName=fileReader.namesList.get(namesIndex);
+      character.setName(fileReader.namesList.get(namesIndex));
       if(fullName)
       {
-         firstName = myName.split("~"); //separates name and definition portion of first name
-         myName = "";
+         firstName = character.getName().split("~"); //separates name and definition portion of first name
+         // myName = "";
          namesIndex = (int)(Math.random() * (fileReader.namesList.size()-1));
       
-         myName=fileReader.namesList.get(namesIndex);
-         lastName = myName.split("~"); //separates name and definition portion of last name
-         myName = firstName[0] + lastName[0] + "\n~"+firstName[1] + lastName[1]+" ~";
+         character.setName(fileReader.namesList.get(namesIndex));
+         lastName = character.getName().split("~"); //separates name and definition portion of last name
+         character.setName(firstName[0] + lastName[0] + "\n~"+firstName[1] + lastName[1]+" ~");
       }
-      if(gender==1) {
-         genderString = "Female";
-      }
-         
-      if(gender==0) {
-         genderString = "Male";
-      } 
+      // if(gender==1) {
+         // genderString = "Female";
+      // }
+   //       
+      // if(gender==0) {
+         // genderString = "Male";
+      // } 
    }
    
    public void checkNameLength() {
-      if(myName.length() > 101 && !ethnicity.equals("Custom") && !fullName) {
+      if(character.getName().length() > 101 && !character.getEthnicity().equals("Custom") && !fullName) {
       //if a name on one of the default lists is too long, this tells the user to report it
          log.println("ERROR \nName length exceeds requirements."+
             "\nPlease notify Emily Haggard (emilyhaggard02@gmail.com) of the following: "+
-            "\nName= " + myName.substring(0, 40) +
-            "\nList= " + ethnicity + genderString + 
+            "\nName= " + character.getName().substring(0, 40) +
+            "\nList= " + character.getEthnicity() + character.getGenderString() + 
             "\nPlease Note: If this is a custom name that you have added, disregard this message.");
       }
    
    }
    
    public void printCharacter() {
-      String charString = "";
-      if(gender==1) {
-         genderString = "Female";
-      }
-      if(gender==0) {
-         genderString = "Male";
-      }
-      
-      //log.print("\n------------------");
-      charString+="Character successfully generated."
-                  +"\n------------------";
-      if((!myName.equals("") && mode!=2) ||
-      (desiredFields.contains("name") && mode==2)){
-         charString+="\nName: " + myName +
-                  "\nOrigin of Name: " +ethnicity +
-                  "\nGender: " + genderString;
-      }
-      
-      if((!myClass.equals("") && mode!=2) ||
-      (desiredFields.contains("class") && mode==2)){                  
-         charString+="\n\nClass: " + myClass;
-      }
-                  
-      if((!myRace.equals("") && mode!=2) ||
-      (desiredFields.contains("race") && mode==2)){
-         charString+="\nRace: " + myRace;
-      }
-      if(usingStats)
-      {
-         charString+="\nLevel: " + statsGen.level+
-                  "\nWisps: " + statsGen.wisps + "\n"+
-                  
-                  "\nEndurance: " + statsGen.end+
-                  "\nDexterity: " + statsGen.dex+
-                  "\nStrength: " + statsGen.str+
-                  "\nArcana: " + statsGen.arc + "\n"+
-                  
-                  "\nDraiocht: " + statsGen.draiocht+
-                  "\nReplenish Rate: " + statsGen.replenishRate;
-      }
-      charString+="\n------------------\n";
-      log.println(charString);
+      // String charString = "";
+      // if(gender==1) {
+         // genderString = "Female";
+      // }
+      // if(gender==0) {
+         // genderString = "Male";
+      // }
+   //    
+   //    //log.print("\n------------------");
+      // charString+="Character successfully generated."
+         //          +"\n------------------";
+      // if((!myName.equals("") && mode!=2) ||
+      // (desiredFields.contains("name") && mode==2)){
+         // charString+="\nName: " + myName +
+            //       "\nOrigin of Name: " +ethnicity +
+            //       "\nGender: " + genderString;
+      // }
+   //    
+      // if((!myClass.equals("") && mode!=2) ||
+      // (desiredFields.contains("class") && mode==2)){                  
+         // charString+="\n\nClass: " + myClass;
+      // }
+   //                
+      // if((!myRace.equals("") && mode!=2) ||
+      // (desiredFields.contains("race") && mode==2)){
+         // charString+="\nRace: " + myRace;
+      // }
+      // if(usingStats)
+      // {
+         // charString+="\nLevel: " + statsGen.level+
+            //       "\nWisps: " + statsGen.wisps + "\n"+
+            //       
+            //       "\nEndurance: " + statsGen.end+
+            //       "\nDexterity: " + statsGen.dex+
+            //       "\nStrength: " + statsGen.str+
+            //       "\nArcana: " + statsGen.arc + "\n"+
+            //       
+            //       "\nDraiocht: " + statsGen.draiocht+
+            //       "\nReplenish Rate: " + statsGen.replenishRate;
+      // }
+      // charString+="\n------------------\n";
+      log.println(character.toString());
       checkNameLength();           
    
    }
@@ -627,13 +657,13 @@ public class CharGen {
    {
       log.println("Enter the desired level.");
      // log.takeInput();
-      myLevel = Integer.parseInt(log.takeInput());
+      character.setLevel(Integer.parseInt(log.takeInput()));
       setLevel = true;
    }
    public String renameFile() 
    {
       int num = 1;
-      String[] nameArray = myName.split(" ~|/");
+      String[] nameArray = character.getName().split(" ~|/");
      
       File tempFile = new File(".\\\\Saves\\"+nameArray[0]+".txt");
       String newName = "";
@@ -663,53 +693,53 @@ public class CharGen {
    }
    public void pickNamePrereqs()
    {
-      if (!setGender || myName.equals(""))
-      {gender = (int)(Math.random()*2);}
+      if (!setGender || character.getName().equals(""))
+      {character.setGender((int)(Math.random()*2));}
       
      // int ethNum = (int)(Math.random()*11);  this is only used once I get custom names working, dummy
       //possibly read names of all files in the Names directory and base it off an
       //array created from those names
       if(setEthnicity){
          return;}
-      ethNum = (int)(Math.random()*10); 
+      int ethNum = (int)(Math.random()*10); 
       //ethnicity = fileReader.races.get(ethNum);
       switch (ethNum) {
          case 0: 
-            ethnicity = "Hebrew";
+            character.setEthnicity("Hebrew");
             break;
          case 1:
-            ethnicity = "German";
+            character.setEthnicity("German");
             break;
          case 2:
-            ethnicity = "Latin";
+            character.setEthnicity("Latin");
             break;
          case 3:
-            ethnicity = "Greek";
+            character.setEthnicity("Greek");
             break;
          case 4:
-            ethnicity = "French";
+            character.setEthnicity("French");
             break;
          case 5:
-            ethnicity = "Hindu";
+            character.setEthnicity("Hindu");
             break;
          case 6:
-            ethnicity = "Japanese";
+            character.setEthnicity("Japanese");
             break;
          case 7:
-            ethnicity = "Russian";
+            character.setEthnicity("Russian");
             break;
          case 8:
-            ethnicity = "Italian";
+            character.setEthnicity("Italian");
             break;
          case 9:
-            ethnicity = "Irish";
+            character.setEthnicity("Irish");
             break;
          case 10:
-            ethnicity = "Custom";
+            character.setEthnicity("Custom");
             break;
       }
       if(dmPresets) { //dmPresets overrides the random generation
-         ethnicity = "Irish";
+         character.setEthnicity("Irish");
       }
    
    
@@ -723,7 +753,7 @@ public class CharGen {
       log.println();
       if(!response.equalsIgnoreCase("none"))
       {setName = true;
-         myName = response;
+         character.setName(response);
          
       }
       if(!setGender){
@@ -733,10 +763,10 @@ public class CharGen {
          log.println();
          if(response.equalsIgnoreCase("male"))
          {setGender = true;
-            gender = 0;  }
+            character.setGender(0);  }
          else if(response.equalsIgnoreCase("female"))
          {setGender = true;
-            gender = 1;}
+            character.setGender(1);}
       }
       if(!setEthnicity)
       {
@@ -749,16 +779,16 @@ public class CharGen {
             if(response.equalsIgnoreCase("help"))
             {
                new Helper("specific_ethnicities");
-               ethnicity = "";
+               character.setEthnicity("");
             }
             else if(!response.equalsIgnoreCase("none"))
             {
                setEthnicity = true;
-               ethnicity = response;
+               character.setEthnicity(response);
             }
             else if(!response.equalsIgnoreCase("help"))
             {pickNamePrereqs();}
-         }while(ethnicity.equals(""));
+         }while(character.getEthnicity().equals(""));
       }
          
       if(!fullName && !setName){
@@ -768,7 +798,7 @@ public class CharGen {
          }
          log.println();
       }
-      if(myName.equals("")){
+      if(character.getName().equals("")){
          pickNamePrereqs();
          pickName();
       }
@@ -785,7 +815,7 @@ public class CharGen {
          desiredFieldsClass();}
       else if(!response.equalsIgnoreCase("none"))
       {setClass = true;
-         myClass = response;
+         character.setClass(response);
          return;
       }
       fileReader = new ReadFiles();
@@ -805,7 +835,7 @@ public class CharGen {
          desiredFieldsRace();}
       else if(!response.equalsIgnoreCase("none"))
       {setRace = true;
-         myRace = response;}
+         character.setRace(response);}
       fileReader = new ReadFiles();
       fileReader.usingRaces = true;
       fileReader.initialize();
