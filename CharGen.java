@@ -47,6 +47,7 @@ public class CharGen {
    private static SysLog log;
    private StatsGen statsGen;
    private ReadFiles fileReader;
+   private CharModel character; 
  // USER INPUT
    private String input = "";
    private int mode = -1; //stores overall generator mode
@@ -88,7 +89,10 @@ public class CharGen {
       me.welcome();
       me.go();    
    }
-   
+   public CharModel getCharacter()
+   {
+   return character;
+   }
    public  void go() {
       fullName=false;
       enterMode(); //auto-random generation, specific generation, or custom generation; then executes the mode
